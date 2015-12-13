@@ -1,0 +1,2 @@
+# myseetu
+Chit Management App
