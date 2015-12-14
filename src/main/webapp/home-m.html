@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Seetu</title>
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+
+    <link rel="stylesheet" href="bower_components/phonon/css/phonon.min.css"/>
+    <style>
+        .tablet-frame {
+            width: 860px;
+            height: 580px;
+            /*background: url('../img/device-medium.png') no-repeat left;*/
+        }
+        .tablet-frame.center {
+            position: fixed;
+            top: 5px;
+            bottom : 5px;
+            right: 20%;
+        }
+        .tablet-frame .tablet-content {
+            width: 822px;
+            height: 530px;
+            margin: 70px 0 0 20px;
+            background-color: #fff;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="center">
+    <div class="tablet-frame center">
+        <iframe class="tablet-content" src="home.html"></iframe>
+    </div>
+</div>
+
+</body>
+</html>

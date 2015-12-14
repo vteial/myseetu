@@ -1,0 +1,94 @@
+<test-payment class="app-page">
+
+    <header class="header-bar">
+        <div class="left">
+            <button class="btn pull-left icon icon-arrow-back" data-navigation="$previous-page"></button>
+        </div>
+        <div class="center">
+            <h1 class="title">Test Payment</h1>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="padded-full">
+            <div class="input-wrapper">
+                <label class="floating-label" for="merchantId">Merchant Id</label>
+                <input class="with-label" id="merchantId" type="text" value="{ defaultPr.merchantId }">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="merchantName">Merchant Name</label>
+                <input class="with-label" id="merchantName" type="text">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="tranAmount">Transaction Amount</label>
+                <input class="with-label" id="tranAmount" type="text">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="appTranId">App Transaction Id</label>
+                <input class="with-label" id="appTranId" type="text">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="callBackUrl">Call Back URL</label>
+                <input class="with-label" id="callBackUrl" type="text" readonly>
+            </div>
+            <div class="padded-top">
+                <button class="btn pull-left" onclick="{ reset }">Reset</button>
+
+                <button class="btn primary pull-right" onclick="{ makePayment }">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var self = this
+
+        var defaultPr = {
+            merchantId: 'testMerchant',
+            merchantName: 'Test Merchant',
+            tranAmount: 5000,
+            appTranId: 1,
+            callBackUrl: 'http://localhost:1131/paymentCallBack'
+        }
+
+        this.on('close', function (self) {
+            console.log('test-payment-module close started...')
+            self.close()
+            console.log('test-payment-module close finished...')
+        })
+
+        this.on('mount', function () {
+            var urlPrefix = location.protocol + '//' + location.hostname
+            if(location.port > 0 && location.port != 80) {
+                urlPrefix += ':' + location.port
+            }
+            defaultPr.callBackUrl = urlPrefix + '/paymentCallBack'
+            console.log(defaultPr.callBackUrl)
+
+            this.reset()
+        })
+
+        reset() {
+            console.log('reset')
+            this.merchantId.value = defaultPr.merchantId
+            this.merchantName.value = defaultPr.merchantName
+            this.tranAmount.value = defaultPr.tranAmount
+            this.appTranId.value = defaultPr.appTranId
+            this.callBackUrl.value = defaultPr.callBackUrl
+        }
+
+        makePayment() {
+            var dialog = phonon.confirm('Are you sure to make payment', 'Confirm',
+                    true, 'Yes, do it!', 'Cancel')
+            dialog.on('confirm', function() {
+                var url = '/paymentRequest';
+                url += '?merchantId=' + this.merchantId.value
+                url += '&merchantName=' + this.merchantName.value
+                url += '&tranAmount=' + this.tranAmount.value
+                url += '&appTranId=' + this.appTranId.value
+                url += '&callBackUrl=' + this.callBackUrl.value
+                window.location = url;
+            } )
+        }
+    </script>
+
+</test-payment>

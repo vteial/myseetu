@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Seetu</title>
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+
+    <link rel="stylesheet" href="bower_components/phonon/css/phonon.min.css"/>
+</head>
+<body>
+
+<div class="side-panel side-panel-left" data-expose-aside="left" data-disable="right" data-page="index" id="side-panel">
+    <header class="header-bar">
+        <div class="pull-left">
+            <h1 class="title">Seetu</h1>
+        </div>
+    </header>
+    <div class="content">
+        <ul class="list">
+            <li><a class="padded-list" href="#!index">Home</a></li>
+            <li><a class="padded-list" href="#!sign-in">Sign In</a></li>
+            <li><a class="padded-list" href="#!sign-up">Sign Up</a></li>
+        </ul>
+    </div>
+</div>
+
+<index data-page="true"></index>
+<message data-page="true"></message>
+<sign-in data-page="true"></sign-in>
+<sign-up data-page="true"></sign-up>
+<reset-password data-page="true"></reset-password>
+<!--
+<test-bed data-page="true"></test-bed>
+-->
+<script src="modules/index.html" type="riot/tag"></script>
+<script src="modules/message.html" type="riot/tag"></script>
+<script src="modules/signIn.html" type="riot/tag"></script>
+<script src="modules/signUp.html" type="riot/tag"></script>
+<script src="modules/resetPassword.html" type="riot/tag"></script>
+<!--
+<script src="modules/test-bed.html" type="riot/tag"></script>
+-->
+<script src="bower_components/riot/riot+compiler.min.js"></script>
+<script src="bower_components/phonon/js/phonon.min.js"></script>
+
+<script src="index.js"></script>
+
+</body>
+</html>
+        

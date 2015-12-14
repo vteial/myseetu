@@ -1,0 +1,46 @@
+<sign-in>
+
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back"
+                data-navigation="$previous-page"></button>
+        <div class="center">
+            <h1 class="title">{ moduleName }</h1>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="padded-full">
+            <div class="input-wrapper">
+                <label class="floating-label" for="userId">User Id</label>
+                <input class="with-label" id="userId" type="text" value="{ user.userId }">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="password">Password</label>
+                <input class="with-label" id="password" type="password" value="{ user.password }">
+            </div>
+            <div class="padded-top">
+                <button class="btn primary pull-right" onclick="{ signIn }">Sign In</button>
+            </div>
+            <p>Lost your password? Reset your password from <a href="#!reset-password">here</a>!</p>
+            <p>Do not have an account yet? <a href="#!sign-up">Register</a> and become member!</p>
+        </div>
+    </div>
+
+    <script>
+        var self = this, moduleId = 'signIn', moduleName = 'Sign In'
+        this.moduleName = moduleName
+
+        this.on('close', function (self) {
+            console.log(moduleId + ' close started...')
+            self.close()
+            console.log(moduleId + ' close finished...')
+        });
+
+        signIn() {
+            console.log('signIn')
+            window.location = 'home.html'
+        }
+
+    </script>
+
+</sign-in>

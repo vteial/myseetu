@@ -1,0 +1,46 @@
+<sign-out>
+
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back"
+                data-navigation="$previous-page"></button>
+        <div class="center">
+            <h1 class="title">{ moduleName }</h1>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="padded-full">
+            <h2>Signing out...</h2>
+        </div>
+    </div>
+
+    <script>
+        var self = this, moduleId = 'signOut', moduleName = 'Sign Out'
+        this.moduleName = moduleName
+
+        var signOutRef
+
+        this.on('close', function (self) {
+            console.log(moduleId + ' close started...')
+            clearTimeout(signOutRef)
+            self.close()
+            console.log(moduleId + ' close finished...')
+        });
+
+        this.on('mount', function () {
+            console.log(moduleId + ' mount started...')
+            signOutRef = setTimeout(signOut, 2000);
+            console.log(moduleId + ' mount finished...')
+        });
+
+        function signOut() {
+            console.log(moduleId + ' started...');
+
+            window.location = 'index.html'
+
+            console.log(moduleId + 'finished...');
+        }
+
+    </script>
+
+</sign-out>

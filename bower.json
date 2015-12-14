@@ -1,0 +1,16 @@
+{
+  "name": "seetu",
+  "description": "Seetu",
+  "version": "0.0.0",
+  "homepage": "http://seetu.appspot.com",
+  "license": "MIT",
+  "private": true,
+  "install": {
+    "base": "src/main/webapp/bowercomponents"
+  },
+  "dependencies": {
+    "moment": "~2.10.3",
+    "lodash": "~3.9.3",
+    "riot": "~2.3.11"
+  }
+}

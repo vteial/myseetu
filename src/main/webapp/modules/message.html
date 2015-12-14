@@ -1,0 +1,40 @@
+<message class="app-page">
+
+    <header class="header-bar">
+        <div class="left">
+            <button class="btn pull-left icon icon-arrow-back" data-navigation="$previous-page"></button>
+        </div>
+        <div class="center">
+            <h1 class="title">Message</h1>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="padded-full">
+            <div class="text-center">
+                <h3 class="text-danger">{ errorMessage }</h3>
+            </div>
+            <div class="text-center">
+                <h3 class="text-success">{ successMessage }</h3>
+                <h4 class="text-success">{ description }</h4>
+            </div>
+        </div>
+    </div>
+    <script>
+        var self = this
+
+        this.on('close', function (self) {
+            console.log('message-module close started...')
+            self.close()
+            console.log('message-module close finished...')
+        })
+
+        this.on('mount', function () {
+            console.log(location)
+//            this.errorMessage = params.errorMessage
+//            this.successMessage = params.successMessage
+//            this.description = params.description
+        })
+    </script>
+
+</message>

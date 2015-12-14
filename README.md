@@ -1,2 +1,2 @@
-# myseetu
-Chit Management App
+# seetu
+Seetu

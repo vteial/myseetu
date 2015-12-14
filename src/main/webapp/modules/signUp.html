@@ -1,0 +1,76 @@
+<sign-up>
+
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back"
+                data-navigation="$previous-page"></button>
+        <div class="center">
+            <h1 class="title">{ moduleName }</h1>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="padded-full">
+            <div class="input-wrapper">
+                <label class="floating-label" for="userId">User Id</label>
+                <input class="with-label" id="userId" type="text" required
+                       value="{ user.userId }">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="password">Password</label>
+                <input class="with-label" id="password" type="password" required
+                       value="{ user.password }">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="retypePassword">Retype Password</label>
+                <input class="with-label" id="retypePassword" type="password" required
+                       value="{ user.retypePassword }">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="firstName">First Name</label>
+                <input class="with-label" id="firstName" type="text" required
+                       value="{ user.firstName }">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="lastName">Last Name</label>
+                <input class="with-label" id="lastName" type="text" required
+                       value="{ user.lastName }">
+            </div>
+            <ul class="list">
+                <li class="">
+                    <label class="checkbox">
+                        <input class="" name="iagree" type="checkbox" required
+                               value="{ user.iagree }">
+                        I agree the Terms and Conditions
+                        <span></span>
+                    </label>
+                </li>
+             </ul>
+            <div class="padded-top">
+                <button class="btn pull-left" onclick="{ reset }">Reset</button>
+
+                <button class="btn primary pull-right" onclick="{ signUp }">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var self = this, moduleId = 'sign-up', moduleName = 'Sign Up'
+        this.moduleName = moduleName
+
+        this.on('close', function (self) {
+            console.log(moduleId + ' close started...')
+            self.close()
+            console.log(moduleId + ' close finished...')
+        });
+
+        reset() {
+            console.log('reset')
+        }
+
+        signUp() {
+            console.log('signUp')
+        }
+
+    </script>
+
+</sign-up>

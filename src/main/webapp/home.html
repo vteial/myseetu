@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Seetu</title>
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+
+    <link rel="stylesheet" href="bower_components/phonon/css/phonon.min.css"/>
+</head>
+<body>
+
+<div class="side-panel side-panel-left" data-expose-aside="left" data-disable="right" data-page="home" id="side-panel">
+    <header class="header-bar">
+        <div class="pull-left">
+            <h1 class="title">Seetu</h1>
+        </div>
+    </header>
+    <div class="content">
+        <ul class="list">
+            <li><a class="padded-list" href="#!home">Home</a></li>
+            <li><a class="padded-list" href="#!profile">Profile</a></li>
+            <li><a class="padded-list" href="#!sign-out">Sign Out</a></li>
+        </ul>
+    </div>
+</div>
+
+<home data-page="true"></home>
+<message data-page="true"></message>
+<profile data-page="true"></profile>
+<sign-out data-page="true"></sign-out>
+
+<script src="modules/home.html" type="riot/tag"></script>
+<script src="modules/message.html" type="riot/tag"></script>
+<script src="modules/profile.html" type="riot/tag"></script>
+<script src="modules/signOut.html" type="riot/tag"></script>
+
+<script src="bower_components/riot/riot+compiler.min.js"></script>
+<script src="bower_components/phonon/js/phonon.min.js"></script>
+
+<script src="home.js"></script>
+
+</body>
+</html>
+        
