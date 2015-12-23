@@ -1,6 +1,6 @@
 email						to : '/receiveEmail.groovy'
 
-get 	'/favicon.ico',		redirect : '/assets/favicon.png'
+get 	'/favicon.ico',		redirect : '/images/favicon.png'
 get     '/',				redirect : '/index'
 get     '/index',			forward  : '/index.groovy'
 get 	'/info',			forward  : '/info.groovy'
@@ -10,3 +10,10 @@ get		'/forbidden',		forward  : '/forbidden.groovy'
 all 	'/_ah/warmup',		forward  : '/ping.groovy'
 
 get  	'/sessions/properties',	                        forward : '/io/wybis/seetu/web/session/properties.groovy'
+post 	'/sessions/sign-up',     	                    forward : '/io/wybis/seetu/web/session/signUp.groovy'
+get 	'/sessions/sign-up-confirm',                    forward : '/io/wybis/seetu/web/session/signUpConfirm.groovy'
+
+post 	'/sessions/sign-in',     	                    forward : '/io/wybis/seetu/web/session/login.groovy'
+get  	'/sessions/sign-out',    	                    forward : '/io/wybis/seetu/web/session/logout.groovy'
+post 	'/sessions/changeDetails',     	                forward : '/io/wybis/seetu/web/session/changeDetails.groovy'
+post 	'/sessions/changePassword',     	            forward : '/io/wybis/seetu/web/session/changePassword.groovy'

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Seetu</title>
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+
+    <link rel="stylesheet" href="bower_components/phonon/css/phonon.min.css"/>
+
+</head>
+<body>
+
+<sign-up></sign-up>
+
+<script type="riot/tag" src="tag-sign-up.html"></script>
+
+<script src="modules/sessionServiceGuest.js"></script>
+<script src="bower_components/riot/riot+compiler.min.js"></script>
+<script>
+    var ss = new SessionService();
+    riot.mount('*',{ sessionService : ss });
+</script>
+
+</body>
+</html>

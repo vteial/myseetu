@@ -3,6 +3,7 @@ package io.wybis.seetu
 import groovyx.gaelyk.plugins.PluginBaseScript
 import io.wybis.seetu.service.impl.DefaultAutoNumberService
 import io.wybis.seetu.service.impl.DefaultSessionService
+import io.wybis.seetu.service.impl.DefaultUserService
 
 class GeneralPlugin extends PluginBaseScript {
 
@@ -12,16 +13,21 @@ class GeneralPlugin extends PluginBaseScript {
 
         DefaultAutoNumberService anS = new DefaultAutoNumberService()
 
+        DefaultUserService usrS = new DefaultUserService()
+        usrS.autoNumberService = anS
+
         DefaultSessionService sesS = new DefaultSessionService()
         sesS.autoNumberService = anS
+        sesS.userService = usrS
         sesS.appUserService = users
 
         binding {
             console = System.out
             jsonCategory = JacksonCategory
             jsonObjectMapper = JacksonCategory.jsonObjectMapper
-            sessionService = sesS
             autoNumberService = anS
+            userService = usrS
+            sessionService = sesS
         }
 
         routes {

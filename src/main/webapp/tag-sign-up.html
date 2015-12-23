@@ -1,0 +1,61 @@
+<sign-up>
+
+    <header class="header-bar">
+        <div class="center">
+            <h1 class="title">{ moduleName }</h1>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="padded-full">
+            <!--
+            <ul class="list" each="{ items }">
+                <li class="padded-list">{ title }</li>
+            </ul>
+            -->
+            <div class="input-wrapper">
+                <label class="floating-label" for="userUserId">User Id</label>
+                <input class="with-label" type="email" required
+                       id="userUserId">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="userPassword">Password</label>
+                <input class="with-label" type="password" required
+                       id="userPassword">
+            </div>
+
+            <div class="padded-top">
+                <button class="btn pull-left" onclick="{ reset }">Reset</button>
+
+                <button class="btn primary pull-right" onclick="{ signUp }">Sign Up</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        var self = this, moduleId = 'sign-up', moduleName = 'Sign Up'
+        this.moduleName = moduleName
+
+        this.items = [
+            { title: 'First item'},
+            { title: 'Second item' },
+            { title: 'Third item' }
+        ]
+
+        reset() {
+            this.userUserId.value = ''
+            this.userPassword.value = ''
+        }
+
+        signUp() {
+            var user = {
+                userId : this.userUserId.value,
+                password : this.userPassword.value
+            }
+            opts.sessionService.signUp(user)
+        }
+
+    </script>
+
+</sign-up>

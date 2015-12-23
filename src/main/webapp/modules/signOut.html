@@ -29,16 +29,20 @@
 
         this.on('mount', function () {
             console.log(moduleId + ' mount started...')
-            signOutRef = setTimeout(signOut, 2000);
+            signOutRef = setTimeout(signOut, 1000);
             console.log(moduleId + ' mount finished...')
         });
 
+        function successOrFailSignOut(res) {
+            window.location = '/index.html'
+        }
+
         function signOut() {
-            console.log(moduleId + ' started...');
+            console.log(moduleId + ' started...')
 
-            window.location = 'index.html'
+            sessionService.signOut(successOrFailSignOut, successOrFailSignOut)
 
-            console.log(moduleId + 'finished...');
+            console.log(moduleId + 'finished...')
         }
 
     </script>

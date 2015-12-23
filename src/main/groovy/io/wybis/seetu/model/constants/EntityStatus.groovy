@@ -6,5 +6,5 @@ interface EntityStatus {
 
     final String PASSIVE = 'passive'
 
-    final String DISABLED = 'disabled'
+    final String PENDING = 'pending'
 }

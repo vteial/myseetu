@@ -11,43 +11,43 @@
     <div class="content">
         <div class="padded-full">
             <div class="input-wrapper">
-                <label class="floating-label" for="userId">User Id</label>
-                <input class="with-label" id="userId" type="text" required
-                       value="{ user.userId }">
+                <label class="floating-label" for="userUserId">User Id</label>
+                <input class="with-label" type="email" required
+                        id="userUserId">
             </div>
             <div class="input-wrapper">
-                <label class="floating-label" for="password">Password</label>
-                <input class="with-label" id="password" type="password" required
-                       value="{ user.password }">
+                <label class="floating-label" for="userPassword">Password</label>
+                <input class="with-label" type="password" required
+                       id="userPassword">
             </div>
             <div class="input-wrapper">
-                <label class="floating-label" for="retypePassword">Retype Password</label>
-                <input class="with-label" id="retypePassword" type="password" required
-                       value="{ user.retypePassword }">
+                <label class="floating-label" for="userRetypePassword">Retype Password</label>
+                <input class="with-label" type="password" required
+                       id="userRetypePassword">
             </div>
             <div class="input-wrapper">
-                <label class="floating-label" for="firstName">First Name</label>
-                <input class="with-label" id="firstName" type="text" required
-                       value="{ user.firstName }">
+                <label class="floating-label" for="userFirstName">First Name</label>
+                <input class="with-label" type="text" required
+                       id="userFirstName">
             </div>
             <div class="input-wrapper">
-                <label class="floating-label" for="lastName">Last Name</label>
-                <input class="with-label" id="lastName" type="text" required
-                       value="{ user.lastName }">
+                <label class="floating-label" for="userLastName">Last Name</label>
+                <input class="with-label" type="text" required
+                       id="userLastName">
             </div>
             <ul class="list">
                 <li class="">
                     <label class="checkbox">
-                        <input class="" name="iagree" type="checkbox" required
-                               value="{ user.iagree }">
+                        <input class="" type="checkbox" id="userIagree">
                         I agree the Terms and Conditions
                         <span></span>
                     </label>
                 </li>
              </ul>
-            <div class="padded-top">
-                <button class="btn pull-left" onclick="{ reset }">Reset</button>
 
+            <div class="padded-top text-center">
+                <button class="btn pull-left" onclick="{ reset }">Reset</button>
+                <a href="#!sign-in" id="signIn">Sign In</a>
                 <button class="btn primary pull-right" onclick="{ signUp }">Sign Up</button>
             </div>
         </div>
@@ -64,12 +64,48 @@
         });
 
         reset() {
-            console.log('reset')
+            this.userUserId.value = ''
+            this.userPassword.value = ''
+            this.userRetypePassword.value = ''
+            this.userFirstName.value = ''
+            this.userLastName.value = ''
+            this.userIagree.checked = false
+        }
+
+        var successSignUp = function(res) {
+            if(res.type === 0) {
+                var alert = phonon.alert(res.message, 'Success', false, 'Ok')
+                alert.on('confirm', function () {
+                    this.userUserId.value = ''
+                    this.userPassword.value = ''
+                    this.userRetypePassword.value = ''
+                    this.userFirstName.value = ''
+                    this.userLastName.value = ''
+                    this.userIagree.checked = false
+
+                    //phonon.navigator().changePage('sign-in')
+                    this.signIn.click()
+                })
+            } else {
+                phonon.notif(res.message, 3000, false);
+            }
+        }
+
+        var failSignUp = function(res) {
+            phonon.notif(res.message, 3000, false);
         }
 
         signUp() {
-            console.log('signUp')
+            var user = {
+                userId : this.userUserId.value,
+                password : this.userPassword.value,
+                retypePassword : this.userRetypePassword.value,
+                firstName : this.userFirstName.value,
+                lastName : this.userLastName.value
+            }
+            sessionService.signUp(user, successSignUp, failSignUp)
         }
+
 
     </script>
 

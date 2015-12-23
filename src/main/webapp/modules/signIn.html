@@ -11,12 +11,12 @@
     <div class="content">
         <div class="padded-full">
             <div class="input-wrapper">
-                <label class="floating-label" for="userId">User Id</label>
-                <input class="with-label" id="userId" type="text" value="{ user.userId }">
+                <label class="floating-label" for="userUserId">User Id</label>
+                <input class="with-label" type="text" id="userUserId">
             </div>
             <div class="input-wrapper">
-                <label class="floating-label" for="password">Password</label>
-                <input class="with-label" id="password" type="password" value="{ user.password }">
+                <label class="floating-label" for="userPassword">Password</label>
+                <input class="with-label" type="password" id="userPassword" >
             </div>
             <div class="padded-top">
                 <button class="btn primary pull-right" onclick="{ signIn }">Sign In</button>
@@ -36,9 +36,24 @@
             console.log(moduleId + ' close finished...')
         });
 
+        var successSignUp = function(res) {
+            if(res.type === 0) {
+                window.location = '/home.html'
+            } else {
+                phonon.notif(res.message, 3000, false)
+            }
+        }
+
+        var failSignUp = function(res) {
+            phonon.notif(res.message, 3000, false)
+        }
+
         signIn() {
-            console.log('signIn')
-            window.location = 'home.html'
+            var user = {
+                userId : this.userUserId.value,
+                password : this.userPassword.value,
+            }
+            sessionService.signIn(user, successSignUp, failSignUp)
         }
 
     </script>

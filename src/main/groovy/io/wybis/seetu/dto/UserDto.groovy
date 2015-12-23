@@ -7,9 +7,19 @@ import groovy.transform.ToString
 @ToString(includeNames = true)
 class UserDto implements Serializable {
 
+    long id
+
     String userId
 
     String password
 
+    String currentPassword
+
     String newPassword
+
+    String retypeNewPassword
+
+    String firstName
+
+    String lastName
 }

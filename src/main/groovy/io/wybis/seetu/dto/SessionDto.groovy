@@ -11,6 +11,8 @@ class SessionDto implements Serializable {
 
     String userId
 
+    String emailId
+
     String firstName
 
     String lastName
