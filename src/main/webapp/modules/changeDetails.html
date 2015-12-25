@@ -55,9 +55,14 @@
 
         self.on('mount', function () {
             console.log(moduleId + ' mount started...')
+            sessionService.properties()
             self.reset()
             console.log(moduleId + ' mount finished...')
         });
+
+        sessionService.one('context-updated', function() {
+            self.reset()
+        })
 
         reset() {
             self.isBlocked = false

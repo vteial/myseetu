@@ -91,6 +91,7 @@ dependencies {
     def gaeVersion = '1.9.30'
 
     compile("eu.bitwalker:UserAgentUtils:1.14")
+    compile("org.ebaysf.web:cors-filter:1.0.1")
     compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")

@@ -1,10 +1,16 @@
 function SessionService() {
-    this.context = {};
+    var self = this;
+
+    self.context = {};
+
+    riot.observable(self);
+
 };
 
 SessionService.prototype.processProperties = function(props) {
     console.log('processing session properties started...');
     _.assign(this.context, props);
+    this.trigger('context-updated');
     console.log('processing session properties finished...');
 };
 
