@@ -45,34 +45,38 @@
 
     <script>
         var self = this, moduleId = 'profile', moduleName = 'Profile'
-        this.moduleName = moduleName
+        self.moduleName = moduleName
 
-        var user = null;
-
-        this.on('close', function (self) {
+        self.on('close', function (self) {
             console.log(moduleId + ' close started...')
             self.close()
             console.log(moduleId + ' close finished...')
         });
 
-        this.on('mount', function () {
+        self.on('mount', function () {
             console.log(moduleId + ' mount started...')
             self.reset()
             console.log(moduleId + ' mount finished...')
         });
 
         reset() {
+            self.isBlocked = false
+            self.message = null
+
             if(sessionService.context.sessionDto) {
-                this.userUserId.value = sessionService.context.sessionDto.userId
-                this.userEmailId.value = sessionService.context.sessionDto.emailId
-                this.userFirstName.value = sessionService.context.sessionDto.firstName
-                this.userLastName.value = sessionService.context.sessionDto.lastName
+                self.userUserId.value = sessionService.context.sessionDto.userId
+                self.userEmailId.value = sessionService.context.sessionDto.emailId
+                self.userFirstName.value = sessionService.context.sessionDto.firstName
+                self.userLastName.value = sessionService.context.sessionDto.lastName
             }
-            this.userFirstNameMessage = null
-            this.userLastNameMessage = null
+            self.userFirstNameMessage = null
+            self.userLastNameMessage = null
+
+            self.update()
         }
 
-        function successSave(res) {
+        function success(res) {
+            self.isBlocked = false
             self.message = res.message
             if(res.type === 0) {
                 phonon.notif(res.message, 2000, false);
@@ -82,76 +86,80 @@
             self.update()
         }
 
-        function failSave(res) {
+        function fail(res) {
+            self.isBlocked = false
             self.message = res.message
-            self.update()
             phonon.notif(res.message, 3000, false);
+            self.update()
         }
 
         changeDetails() {
-            this.message = null
-            this.update()
+            self.message = null
+            //self.update()
 
-            if(!is.all.null([this.userFirstNameMessage, this.userLastNameMessage])) {
-                this.message = 'Fix the issues on highlighted fields...'
-                this.update()
+            if(!is.all.null([self.userFirstNameMessage, self.userLastNameMessage])) {
+                self.message = 'Fix the issues on highlighted fields...'
+                self.update()
                 return
             }
 
             var user = {
-                firstName : this.userFirstName.value,
-                lastName : this.userLastName.value
+                firstName : self.userFirstName.value,
+                lastName : self.userLastName.value
             }
 
-            sessionService.changeDetails(user, successSave, failSave)
+            self.isBlocked = true
+            self.update()
+
+            sessionService.changeDetails(user, success, fail)
         }
 
         validateUserFirstName() {
-            var s = this.userFirstName.value
+            var s = self.userFirstName.value
             if(is.empty(s)) {
-                this.userFirstNameMessage = 'Should be valid name'
-                this.update()
+                self.userFirstNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             s = _.trim(s)
             if(s.length == 0) {
-                this.userFirstNameMessage = 'Should be valid name'
-                this.update()
+                self.userFirstNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             if(s.length < 2 && s.length > 20) {
-                this.userFirstNameMessage = 'Should be minimum 2 and not more than 20 characters long'
-                this.update()
+                self.userFirstNameMessage = 'Should be minimum 2 and not more than 20 characters long'
+                self.update()
                 return
             }
 
-            this.userFirstName.value = _.capitalize(s)
-            this.userFirstNameMessage = null
-            this.update()
+            self.userFirstName.value = _.capitalize(s)
+            self.userFirstNameMessage = null
+            self.update()
         }
 
         validateUserLastName() {
-            var s = this.userLastName.value
+            var s = self.userLastName.value
             if(is.empty(s)) {
-                this.userLastNameMessage = 'Should be valid name'
-                this.update()
+                self.userLastNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             s = _.trim(s)
             if(s.length == 0) {
-                this.userLastNameMessage = 'Should be valid name'
-                this.update()
+                self.userLastNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             if(s.length < 2 && s.length > 20) {
-                this.userLastNameMessage = 'Should be minimum 2 and not more than 20 characters long'
-                this.update()
+                self.userLastNameMessage = 'Should be minimum 2 and not more than 20 characters long'
+                self.update()
                 return
             }
 
-            this.userLastName.value = _.capitalize(s)
-            this.userLastNameMessage = null
-            this.update()
+            self.userLastName.value = _.capitalize(s)
+            self.userLastNameMessage = null
+            self.update()
         }
 
     </script>

@@ -62,188 +62,195 @@
 
     <script>
         var self = this, moduleId = 'sign-up', moduleName = 'Sign Up'
-        this.moduleName = moduleName
+        self.moduleName = moduleName
 
-        this.on('close', function (self) {
+        self.on('close', function (self) {
             console.log(moduleId + ' close started...')
             self.close()
             console.log(moduleId + ' close finished...')
         });
 
-        this.on('mount', function () {
+        self.on('mount', function () {
             console.log(moduleId + ' mount started...')
-            this.reset()
+            self.reset()
             console.log(moduleId + ' mount finished...')
         });
 
         reset() {
-            this.message = null
+            self.isBlocked = false
+            self.message = null
 
-            this.userUserId.value = ''
-            this.userUserIdMessage = null
+            self.userUserId.value = ''
+            self.userUserIdMessage = null
 
-            this.userPassword.value = ''
-            this.userPasswordMessage = null
+            self.userPassword.value = ''
+            self.userPasswordMessage = null
 
-            this.userRetypePassword.value = ''
-            this.userRetypePasswordMessage = null
+            self.userRetypePassword.value = ''
+            self.userRetypePasswordMessage = null
 
-            this.userFirstName.value = ''
-            this.userFirstNameMessage = null
+            self.userFirstName.value = ''
+            self.userFirstNameMessage = null
 
-            this.userLastName.value = ''
-            this.userLastNameMessage = null
+            self.userLastName.value = ''
+            self.userLastNameMessage = null
 
-            this.userIagree.checked = false
+            self.userIagree.checked = false
+
+            self.update()
         }
 
-        function successSignUp(res) {
+        function success(res) {
+            self.isBlocked = false
             if(res.type === 0) {
                 var alert = phonon.alert(res.message, 'Success', false, 'Ok')
                 alert.on('confirm', function () {
                     self.reset()
                     //phonon.navigator().changePage('sign-in')
-                    this.signIn.click()
+                    self.signIn.click()
                 })
             } else {
                 self.message = res.message
-                self.update()
                 phonon.notif(res.message, 3000, false);
             }
+            self.update()
         }
 
-        function failSignUp(res) {
+        function fail(res) {
             self.message = res.message
-            self.update()
             phonon.notif(res.message, 3000, false)
+            self.update()
         }
 
         signUp() {
-            this.message = null
-            this.update()
+            self.message = null
+            //self.update()
 
-            if(!is.all.null([this.userUserIdMessage, this.userPasswordMessage, this.userFirstNameMessage, this.userLastNameMessage])) {
-                this.message = 'Fix the issues on highlighted fields...'
-                this.update()
+            if(!is.all.null([self.userUserIdMessage, self.userPasswordMessage, self.userFirstNameMessage, self.userLastNameMessage])) {
+                self.message = 'Fix the issues on highlighted fields...'
+                self.update()
                 return
             }
 
             var user = {
-                userId : this.userUserId.value,
-                password : this.userPassword.value,
-                retypePassword : this.userRetypePassword.value,
-                firstName : this.userFirstName.value,
-                lastName : this.userLastName.value
+                userId : self.userUserId.value,
+                password : self.userPassword.value,
+                retypePassword : self.userRetypePassword.value,
+                firstName : self.userFirstName.value,
+                lastName : self.userLastName.value
             }
 
             if(user.password != user.retypePassword) {
-                this.message = 'Password and Retype Password should be matched...'
-                this.update()
-                phonon.notif(this.message, 3000, false)
+                self.message = 'Password and Retype Password should be matched...'
+                self.update()
+                phonon.notif(self.message, 3000, false)
                 return
             }
 
-            if( !this.userIagree.checked) {
-                this.message = 'You should agree the terms and conditions...'
-                this.update()
-                phonon.notif(this.message, 3000, false)
+            if( !self.userIagree.checked) {
+                self.message = 'You should agree the terms and conditions...'
+                self.update()
+                phonon.notif(self.message, 3000, false)
                 return
             }
 
-            sessionService.signUp(user, successSignUp, failSignUp)
+            self.isBlocked = true
+            self.update()
+
+            sessionService.signUp(user, success, fail)
         }
 
         validateUserUserId() {
-            var s = this.userUserId.value
+            var s = self.userUserId.value
             if(!is.email(s)) {
-                this.userUserIdMessage = 'Should be valid email id'
+                self.userUserIdMessage = 'Should be valid email id'
             } else {
-                this.userUserIdMessage = null
+                self.userUserIdMessage = null
             }
-            //this.userUserId = s.toLowerCase()
-            this.update()
+            //self.userUserId = s.toLowerCase()
+            self.update()
         }
 
         validatePassword() {
-            var s = this.userPassword.value
+            var s = self.userPassword.value
             if(is.empty(s)) {
-                this.userPasswordMessage = 'Should be valid password'
-                this.update()
+                self.userPasswordMessage = 'Should be valid password'
+                self.update()
                 return
             }
             s = _.trim(s)
             if(s.length < 5) {
-                this.userPasswordMessage = 'Should be minimum 5 characters long'
-                this.update()
+                self.userPasswordMessage = 'Should be minimum 5 characters long'
+                self.update()
                 return
             }
-            this.userPasswordMessage = null
-            this.update()
+            self.userPasswordMessage = null
+            self.update()
         }
 
         validateRetypePassword() {
-            var s = this.userRetypePassword.value
+            var s = self.userRetypePassword.value
             if(is.empty(s)) {
-                this.userRetypePasswordMessage = 'Should be valid password'
-                this.update()
+                self.userRetypePasswordMessage = 'Should be valid password'
+                self.update()
                 return
             }
             s = _.trim(s)
             if(s.length < 5) {
-                this.userRetypePasswordMessage = 'Should be minimum 5 characters long'
-                this.update()
+                self.userRetypePasswordMessage = 'Should be minimum 5 characters long'
+                self.update()
                 return
             }
-            this.userRetypePasswordMessage = null
-            this.update()
+            self.userRetypePasswordMessage = null
+            self.update()
         }
 
         validateUserFirstName() {
-            var s = this.userFirstName.value
+            var s = self.userFirstName.value
             if(is.empty(s)) {
-                this.userFirstNameMessage = 'Should be valid name'
-                this.update()
+                self.userFirstNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             s = _.trim(s)
             if(s.length == 0) {
-                this.userFirstNameMessage = 'Should be valid name'
-                this.update()
+                self.userFirstNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             if(s.length < 2 && s.length > 20) {
-                this.userFirstNameMessage = 'Should be minimum 2 and not more than 20 characters long'
-                this.update()
+                self.userFirstNameMessage = 'Should be minimum 2 and not more than 20 characters long'
+                self.update()
                 return
             }
 
-            this.userFirstName.value = _.capitalize(s)
-            this.userFirstNameMessage = null
-            this.update()
+            self.userFirstName.value = _.capitalize(s)
+            self.userFirstNameMessage = null
+            self.update()
         }
 
         validateUserLastName() {
-            var s = this.userLastName.value
+            var s = self.userLastName.value
             if(is.empty(s)) {
-                this.userLastNameMessage = 'Should be valid name'
-                this.update()
+                self.userLastNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             s = _.trim(s)
             if(s.length == 0) {
-                this.userLastNameMessage = 'Should be valid name'
-                this.update()
+                self.userLastNameMessage = 'Should be valid name'
+                self.update()
                 return
             }
             if(s.length < 2 && s.length > 20) {
-                this.userLastNameMessage = 'Should be minimum 2 and not more than 20 characters long'
-                this.update()
+                self.userLastNameMessage = 'Should be minimum 2 and not more than 20 characters long'
+                self.update()
                 return
             }
 
-            this.userLastName.value = _.capitalize(s)
-            this.userLastNameMessage = null
-            this.update()
+            self.userLastName.value = _.capitalize(s)
+            self.userLastNameMessage = null
+            self.update()
         }
 
     </script>

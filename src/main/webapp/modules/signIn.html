@@ -15,14 +15,14 @@
             </ul>
             <div class="input-wrapper">
                 <label class="floating-label" for="userUserId">User Id</label>
-                <input class="with-label" type="text" id="userUserId" autofocus>
+                <input class="with-label" type="text" id="userUserId" disabled={ isBlocked }>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userPassword">Password</label>
-                <input class="with-label" type="password" id="userPassword" >
+                <input class="with-label" type="password" id="userPassword" disabled={ isBlocked }>
             </div>
             <div class="padded-top">
-                <button class="btn primary pull-right" onclick="{ signIn }">Sign In</button>
+                <button class="btn primary pull-right" onclick="{ signIn }" disabled={ isBlocked }>Sign In</button>
             </div>
             <p>Lost your password? Reset your password from <a href="#!reset-password">here</a>!</p>
             <p>Do not have an account yet? <a href="#!sign-up">Register</a> and become member!</p>
@@ -31,49 +31,50 @@
 
     <script>
         var self = this, moduleId = 'signIn', moduleName = 'Sign In'
-        this.moduleName = moduleName
+        self.moduleName = moduleName
 
-        this.message = null
-
-        this.on('close', function (self) {
+        self.on('close', function (self) {
             console.log(moduleId + ' close started...')
             self.close()
             console.log(moduleId + ' close finished...')
         });
 
-//        this.on('mount', function () {
-//            console.log(moduleId + ' mount started...')
-//
-//            console.log(moduleId + ' mount finished...')
-//        });
+        self.on('mount', function () {
+            console.log(moduleId + ' mount started...')
+            self.isBlocked = false
+            self.message = null
+            console.log(moduleId + ' mount finished...')
+        });
 
-        var successSignUp = function(res) {
+        var success = function(res) {
+            self.isBlocked = false
             if(res.type === 0) {
                 window.location = '/home.html'
             } else {
                 self.message = res.message
-                self.update()
                 phonon.notif(res.message, 3000, false)
             }
-            console.log(self.message)
+            self.update()
         }
 
-        var failSignUp = function(res) {
+        var fail = function(res) {
+            self.isBlocked = false
             self.message = res.message
             self.update()
             phonon.notif(res.message, 3000, false)
         }
 
         signIn() {
-            this.message = null
-            this.update()
+            self.isBlocked = true
+            self.message = null
+            self.update()
 
             var user = {
-                userId : this.userUserId.value,
-                password : this.userPassword.value,
+                userId : self.userUserId.value,
+                password : self.userPassword.value,
             }
 
-            sessionService.signIn(user, successSignUp, failSignUp)
+            sessionService.signIn(user, success, fail)
         }
 
     </script>
