@@ -13,7 +13,7 @@ get  	'/sessions/properties',	                        forward : '/io/wybis/seetu
 post 	'/sessions/sign-up',     	                    forward : '/io/wybis/seetu/web/session/signUp.groovy'
 get 	'/sessions/sign-up-confirm',                    forward : '/io/wybis/seetu/web/session/signUpConfirm.groovy'
 
-post 	'/sessions/sign-in',     	                    forward : '/io/wybis/seetu/web/session/login.groovy'
-get  	'/sessions/sign-out',    	                    forward : '/io/wybis/seetu/web/session/logout.groovy'
-post 	'/sessions/changeDetails',     	                forward : '/io/wybis/seetu/web/session/changeDetails.groovy'
-post 	'/sessions/changePassword',     	            forward : '/io/wybis/seetu/web/session/changePassword.groovy'
+post 	'/sessions/sign-in',     	                    forward : '/io/wybis/seetu/web/session/signIn.groovy'
+get  	'/sessions/sign-out',    	                    forward : '/io/wybis/seetu/web/session/signOut.groovy'
+post 	'/sessions/change-details',     	            forward : '/io/wybis/seetu/web/session/changeDetails.groovy'
+post 	'/sessions/change-password',     	            forward : '/io/wybis/seetu/web/session/changePassword.groovy'

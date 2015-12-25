@@ -6,6 +6,7 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
 
     <link rel="stylesheet" href="bower_components/phonon/css/phonon.min.css"/>
+    <link rel="stylesheet" href="default.css"/>
 </head>
 <body>
 
@@ -18,7 +19,8 @@
     <div class="content">
         <ul class="list">
             <li><a class="padded-list" href="#!home">Home</a></li>
-            <li><a class="padded-list" href="#!profile">Profile</a></li>
+            <li><a class="padded-list" href="#!change-details">Change Details</a></li>
+            <li><a class="padded-list" href="#!change-password">Change Password</a></li>
             <li><a class="padded-list" href="#!sign-out">Sign Out</a></li>
         </ul>
     </div>
@@ -26,14 +28,22 @@
 
 <home data-page="true"></home>
 <message data-page="true"></message>
-<profile data-page="true"></profile>
+<change-details data-page="true"></change-details>
+<change-password data-page="true"></change-password>
 <sign-out data-page="true"></sign-out>
 
 <script src="modules/home.html" type="riot/tag"></script>
 <script src="modules/message.html" type="riot/tag"></script>
-<script src="modules/profile.html" type="riot/tag"></script>
+<script src="modules/changeDetails.html" type="riot/tag"></script>
+<script src="modules/changePassword.html" type="riot/tag"></script>
 <script src="modules/signOut.html" type="riot/tag"></script>
 
+<script src="bower_components/is_js/is.min.js"></script>
+<script src="bower_components/lodash/lodash.min.js"></script>
+<script src="bower_components/moment/min/moment.min.js"></script>
+<!--
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+-->
 <script src="bower_components/riot/riot+compiler.min.js"></script>
 <script src="bower_components/phonon/js/phonon.min.js"></script>
 

@@ -69,11 +69,17 @@ public class User extends AbstractModel {
     // domain operations
 
     void correctData() {
+        if(userId) {
+            userId = userId.toLowerCase()
+        }
+        if(emailId) {
+            emailId = emailId.toLowerCase()
+        }
         if(firstName) {
-            firstName = firstName.capitalize()
+            firstName = firstName.toLowerCase()
         }
         if(lastName) {
-            lastName = lastName.capitalize()
+            lastName = lastName.toLowerCase()
         }
     }
 }

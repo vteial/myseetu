@@ -69,8 +69,8 @@ appengine {
     disableUpdateCheck = true
 
     appcfg {
-        email = 'vteial@wybis.com'
-        //email = 'vteial@gmail.com'
+        //email = 'vteial@wybis.com'
+        email = 'vteial@gmail.com'
         noCookies = true
         oauth2 = true
 
@@ -88,7 +88,7 @@ appengine {
 dependencies {
     def jacksonVersion = '2.4.3'
     def groovyVersion = '2.4.5'
-    def gaeVersion = '1.9.26'
+    def gaeVersion = '1.9.30'
 
     compile("eu.bitwalker:UserAgentUtils:1.14")
     compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")

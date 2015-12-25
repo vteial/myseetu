@@ -16,12 +16,5 @@ if (responseDto) {
 
 SessionDto sessionDto = session[SessionService.SESSION_USER_KEY]
 
-if (sessionDto) {
-
-    model['events'] = sessionService.events(sessionDto)
-
-    responseDto.model = model;
-}
-
 jsonCategory.respondWithJson(response, responseDto)
 

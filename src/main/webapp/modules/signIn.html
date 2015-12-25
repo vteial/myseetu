@@ -10,9 +10,12 @@
 
     <div class="content">
         <div class="padded-full">
+            <ul class="list" if={ (message != null) }>
+                <li class="danger text-center">{ message }</li>
+            </ul>
             <div class="input-wrapper">
                 <label class="floating-label" for="userUserId">User Id</label>
-                <input class="with-label" type="text" id="userUserId">
+                <input class="with-label" type="text" id="userUserId" autofocus>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userPassword">Password</label>
@@ -30,29 +33,46 @@
         var self = this, moduleId = 'signIn', moduleName = 'Sign In'
         this.moduleName = moduleName
 
+        this.message = null
+
         this.on('close', function (self) {
             console.log(moduleId + ' close started...')
             self.close()
             console.log(moduleId + ' close finished...')
         });
 
+//        this.on('mount', function () {
+//            console.log(moduleId + ' mount started...')
+//
+//            console.log(moduleId + ' mount finished...')
+//        });
+
         var successSignUp = function(res) {
             if(res.type === 0) {
                 window.location = '/home.html'
             } else {
+                self.message = res.message
+                self.update()
                 phonon.notif(res.message, 3000, false)
             }
+            console.log(self.message)
         }
 
         var failSignUp = function(res) {
+            self.message = res.message
+            self.update()
             phonon.notif(res.message, 3000, false)
         }
 
         signIn() {
+            this.message = null
+            this.update()
+
             var user = {
                 userId : this.userUserId.value,
                 password : this.userPassword.value,
             }
+
             sessionService.signIn(user, successSignUp, failSignUp)
         }
 

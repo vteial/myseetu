@@ -11,6 +11,9 @@ request.responseDto = responseDto
 
 User auser = jsonCategory.parseJson(request, User.class)
 try {
+    if(auser.userId) {
+        auser.userId = auser.userId.toLowerCase()
+    }
     auser.emailId = auser.userId
     SessionDto sessionUserDto = new SessionDto()
 
@@ -33,7 +36,7 @@ seetu.appspot.com
         //console.println(mailContent)
         mail.send(from: 'vteial@gmail.com',
                 to: auser.emailId,
-                subject: "EventAndGifts account confirmation",
+                subject: "MySeetu account confirmation",
                 textBody: mailContent)
     }
     catch (Throwable t) {
@@ -50,8 +53,8 @@ catch (Throwable t) {
     responseDto.type = ResponseDto.UNKNOWN
     responseDto.message = 'Sign Up failed...';
     responseDto.data = Helper.getStackTraceAsString(t)
-    t.printStackTrace()
-    //logger.warning(responseDto.message)
+    log.warning(responseDto.message)
+    //t.printStackTrace()
 }
 
 jsonCategory.respondWithJson(response, responseDto)

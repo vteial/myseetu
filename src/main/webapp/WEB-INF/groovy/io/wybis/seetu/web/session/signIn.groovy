@@ -13,7 +13,9 @@ request.responseDto = responseDto
 
 UserDto userDto = jsonCategory.parseJson(request, UserDto.class)
 try {
-
+    if(userDto.userId) {
+        userDto.userId = userDto.userId.toLowerCase()
+    }
     SessionDto sessionUserDto = sessionService.login(session, userDto)
     //responseDto.data = sessionService.properties(session)
     String loginResponseRedirectURI = session[SessionService.SESSION_LOGIN_REDIRECT_KEY]

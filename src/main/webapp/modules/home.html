@@ -23,6 +23,12 @@
             console.log(moduleId + ' close finished...')
         });
 
+        this.on('mount', function () {
+            console.log(moduleId + ' mount started...')
+            sessionService.properties()
+            console.log(moduleId + ' mount finished...')
+        });
+
     </script>
 
 </home>

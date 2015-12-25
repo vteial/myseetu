@@ -1,0 +1,36 @@
+.danger {
+    color: #8f1d2e;
+    background-color: #ffced8;
+}
+
+.warning {
+    color: #c06329;
+    background-color: #f7dfd0;
+}
+
+.information {
+    color: #31708f;
+    background-color: #d9edf7;
+}
+
+.success {
+    color: #2d8f40;
+    background-color: #ccf7d4;
+}
+
+.danger-text {
+    color: #8f1d2e;
+}
+
+.warning-text {
+    color: #c06329;
+}
+
+.information-text {
+    color: #31708f;
+}
+
+.success-text {
+    color: #2d8f40;
+}
+

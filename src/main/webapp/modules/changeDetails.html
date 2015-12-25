@@ -1,0 +1,159 @@
+<change-details>
+
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back"
+                data-navigation="$previous-page"></button>
+        <div class="center">
+            <h1 class="title">{ moduleName }</h1>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="padded-full">
+            <ul class="list" if={ (message != null) }>
+                <li class="danger text-center">{ message }</li>
+            </ul>
+            <div class="input-wrapper">
+                <label class="floating-label" for="userUserId">User Id</label>
+                <input class="with-label" type="email" readonly
+                       id="userUserId">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="userEmailId">Email Id</label>
+                <input class="with-label" type="text" readonly
+                       id="userEmailId">
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="userFirstName">First Name</label>
+                <input class="with-label" type="text" required
+                       id="userFirstName" onblur="{ validateUserFirstName }">
+                <div class="danger-text" if={(userFirstNameMessage != null) }>{ userFirstNameMessage }</div>
+            </div>
+            <div class="input-wrapper">
+                <label class="floating-label" for="userLastName">Last Name</label>
+                <input class="with-label" type="text" required
+                       id="userLastName" onblur="{ validateUserLastName }">
+                <div class="danger-text" if={(userFirstNameMessage != null) }>{ userLastNameMessage }</div>
+            </div>
+            <div class="padded-top text-center">
+                <button class="btn pull-left" onclick="{ reset }">Reset</button>
+
+                <button class="btn primary pull-right" onclick="{ changeDetails }">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var self = this, moduleId = 'profile', moduleName = 'Profile'
+        this.moduleName = moduleName
+
+        var user = null;
+
+        this.on('close', function (self) {
+            console.log(moduleId + ' close started...')
+            self.close()
+            console.log(moduleId + ' close finished...')
+        });
+
+        this.on('mount', function () {
+            console.log(moduleId + ' mount started...')
+            self.reset()
+            console.log(moduleId + ' mount finished...')
+        });
+
+        reset() {
+            if(sessionService.context.sessionDto) {
+                this.userUserId.value = sessionService.context.sessionDto.userId
+                this.userEmailId.value = sessionService.context.sessionDto.emailId
+                this.userFirstName.value = sessionService.context.sessionDto.firstName
+                this.userLastName.value = sessionService.context.sessionDto.lastName
+            }
+            this.userFirstNameMessage = null
+            this.userLastNameMessage = null
+        }
+
+        function successSave(res) {
+            self.message = res.message
+            if(res.type === 0) {
+                phonon.notif(res.message, 2000, false);
+            } else {
+                phonon.notif(res.message, 3000, false);
+            }
+            self.update()
+        }
+
+        function failSave(res) {
+            self.message = res.message
+            self.update()
+            phonon.notif(res.message, 3000, false);
+        }
+
+        changeDetails() {
+            this.message = null
+            this.update()
+
+            if(!is.all.null([this.userFirstNameMessage, this.userLastNameMessage])) {
+                this.message = 'Fix the issues on highlighted fields...'
+                this.update()
+                return
+            }
+
+            var user = {
+                firstName : this.userFirstName.value,
+                lastName : this.userLastName.value
+            }
+
+            sessionService.changeDetails(user, successSave, failSave)
+        }
+
+        validateUserFirstName() {
+            var s = this.userFirstName.value
+            if(is.empty(s)) {
+                this.userFirstNameMessage = 'Should be valid name'
+                this.update()
+                return
+            }
+            s = _.trim(s)
+            if(s.length == 0) {
+                this.userFirstNameMessage = 'Should be valid name'
+                this.update()
+                return
+            }
+            if(s.length < 2 && s.length > 20) {
+                this.userFirstNameMessage = 'Should be minimum 2 and not more than 20 characters long'
+                this.update()
+                return
+            }
+
+            this.userFirstName.value = _.capitalize(s)
+            this.userFirstNameMessage = null
+            this.update()
+        }
+
+        validateUserLastName() {
+            var s = this.userLastName.value
+            if(is.empty(s)) {
+                this.userLastNameMessage = 'Should be valid name'
+                this.update()
+                return
+            }
+            s = _.trim(s)
+            if(s.length == 0) {
+                this.userLastNameMessage = 'Should be valid name'
+                this.update()
+                return
+            }
+            if(s.length < 2 && s.length > 20) {
+                this.userLastNameMessage = 'Should be minimum 2 and not more than 20 characters long'
+                this.update()
+                return
+            }
+
+            this.userLastName.value = _.capitalize(s)
+            this.userLastNameMessage = null
+            this.update()
+        }
+
+    </script>
+
+</change-details>
