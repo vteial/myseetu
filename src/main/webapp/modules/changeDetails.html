@@ -25,20 +25,20 @@
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userFirstName">First Name</label>
-                <input class="with-label" type="text" required
-                       id="userFirstName" onblur="{ validateUserFirstName }">
+                <input class="with-label" type="text" required autofocus
+                       id="userFirstName" onblur="{ validateUserFirstName }" disabled={ isBlocked }>
                 <div class="danger-text" if={(userFirstNameMessage != null) }>{ userFirstNameMessage }</div>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userLastName">Last Name</label>
                 <input class="with-label" type="text" required
-                       id="userLastName" onblur="{ validateUserLastName }">
+                       id="userLastName" onblur="{ validateUserLastName }" disabled={ isBlocked }>
                 <div class="danger-text" if={(userFirstNameMessage != null) }>{ userLastNameMessage }</div>
             </div>
             <div class="padded-top text-center">
-                <button class="btn pull-left" onclick="{ reset }">Reset</button>
+                <button class="btn pull-left" onclick="{ reset }" disabled={ isBlocked }>Reset</button>
 
-                <button class="btn primary pull-right" onclick="{ changeDetails }">Save</button>
+                <button class="btn primary pull-right" onclick="{ changeDetails }" disabled={ isBlocked }>Save</button>
             </div>
         </div>
     </div>
@@ -47,17 +47,23 @@
         var self = this, moduleId = 'profile', moduleName = 'Profile'
         self.moduleName = moduleName
 
+//        self.on('mount', function () {
+//            console.log(moduleId + ' mount started...')
+//            self.reset()
+//            console.log(moduleId + ' mount finished...')
+//        });
+
+        self.on('ready', function() {
+            console.log(moduleId + ' ready started...')
+            sessionService.properties()
+            self.userUserId.focus()
+            console.log(moduleId + ' ready finished...')
+        })
+
         self.on('close', function (self) {
             console.log(moduleId + ' close started...')
             self.close()
             console.log(moduleId + ' close finished...')
-        });
-
-        self.on('mount', function () {
-            console.log(moduleId + ' mount started...')
-            sessionService.properties()
-            self.reset()
-            console.log(moduleId + ' mount finished...')
         });
 
         sessionService.one('context-updated', function() {
@@ -71,8 +77,10 @@
             if(sessionService.context.sessionDto) {
                 self.userUserId.value = sessionService.context.sessionDto.userId
                 self.userEmailId.value = sessionService.context.sessionDto.emailId
-                self.userFirstName.value = sessionService.context.sessionDto.firstName
-                self.userLastName.value = sessionService.context.sessionDto.lastName
+                var s = sessionService.context.sessionDto.firstName
+                self.userFirstName.value = _.capitalize(s)
+                s = sessionService.context.sessionDto.lastName
+                self.userLastName.value = _.capitalize(s)
             }
             self.userFirstNameMessage = null
             self.userLastNameMessage = null
@@ -129,6 +137,11 @@
             s = _.trim(s)
             if(s.length == 0) {
                 self.userFirstNameMessage = 'Should be valid name'
+                self.update()
+                return
+            }
+            if(!(/^[a-zA-Z ]*$/.test(s))) {
+                self.userFirstNameMessage = 'Should have alphabets only'
                 self.update()
                 return
             }

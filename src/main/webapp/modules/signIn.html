@@ -15,14 +15,17 @@
             </ul>
             <div class="input-wrapper">
                 <label class="floating-label" for="userUserId">User Id</label>
-                <input class="with-label" type="text" id="userUserId" disabled={ isBlocked }>
+                <input class="with-label" type="text"
+                       id="userUserId" disabled={ isBlocked }>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userPassword">Password</label>
-                <input class="with-label" type="password" id="userPassword" disabled={ isBlocked }>
+                <input class="with-label" type="password"
+                       id="userPassword" disabled={ isBlocked }>
             </div>
             <div class="padded-top">
-                <button class="btn primary pull-right" onclick="{ signIn }" disabled={ isBlocked }>Sign In</button>
+                <button class="btn primary pull-right"
+                        onclick="{ signIn }" disabled={ isBlocked }>Sign In</button>
             </div>
             <p>Lost your password? Reset your password from <a href="#!reset-password">here</a>!</p>
             <p>Do not have an account yet? <a href="#!sign-up">Register</a> and become member!</p>
@@ -33,17 +36,23 @@
         var self = this, moduleId = 'signIn', moduleName = 'Sign In'
         self.moduleName = moduleName
 
-        self.on('close', function (self) {
-            console.log(moduleId + ' close started...')
-            self.close()
-            console.log(moduleId + ' close finished...')
-        });
-
         self.on('mount', function () {
             console.log(moduleId + ' mount started...')
             self.isBlocked = false
             self.message = null
             console.log(moduleId + ' mount finished...')
+        });
+
+        self.on('ready', function() {
+            console.log(moduleId + ' ready started...')
+            self.userUserId.focus()
+            console.log(moduleId + ' ready finished...')
+        })
+
+        self.on('close', function (self) {
+            console.log(moduleId + ' close started...')
+            self.close()
+            console.log(moduleId + ' close finished...')
         });
 
         var success = function(res) {

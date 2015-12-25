@@ -15,32 +15,32 @@
             </ul>
             <div class="input-wrapper">
                 <label class="floating-label" for="userUserId">User (Email) Id</label>
-                <input class="with-label" type="email" required
-                        id="userUserId" autofocus onblur="{ validateUserUserId }">
+                <input class="with-label" type="email" required autofocus
+                        id="userUserId" onblur="{ validateUserUserId }" disabled={ isBlocked }>
                 <div class="danger-text" if={(userUserIdMessage != null) }>{ userUserIdMessage }</div>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userPassword">Password</label>
                 <input class="with-label" type="password" required
-                       id="userPassword" onblur="{ validatePassword }">
+                       id="userPassword" onblur="{ validatePassword }" disabled={ isBlocked }>
                 <div class="danger-text" if={(userPasswordMessage != null) }>{ userPasswordMessage }</div>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userRetypePassword">Retype Password</label>
                 <input class="with-label" type="password" required
-                       id="userRetypePassword" onblur="{ validateRetypePassword }">
+                       id="userRetypePassword" onblur="{ validateRetypePassword }" disabled={ isBlocked }>
                 <div class="danger-text" if={(userRetypePasswordMessage != null) }>{ userRetypePasswordMessage }</div>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userFirstName">First Name</label>
                 <input class="with-label" type="text" required
-                       id="userFirstName" onblur="{ validateUserFirstName }">
+                       id="userFirstName" onblur="{ validateUserFirstName }" disabled={ isBlocked }>
                 <div class="danger-text" if={(userFirstNameMessage != null) }>{ userFirstNameMessage }</div>
             </div>
             <div class="input-wrapper">
                 <label class="floating-label" for="userLastName">Last Name</label>
                 <input class="with-label" type="text" required
-                       id="userLastName" onblur="{ validateUserLastName }">
+                       id="userLastName" onblur="{ validateUserLastName }" disabled={ isBlocked }>
                 <div class="danger-text" if={(userFirstNameMessage != null) }>{ userLastNameMessage }</div>
             </div>
             <ul class="list">
@@ -53,9 +53,9 @@
                 </li>
              </ul>
             <div class="padded-top text-center">
-                <button class="btn pull-left" onclick="{ reset }">Reset</button>
+                <button class="btn pull-left" onclick="{ reset }" disabled={ isBlocked }>Reset</button>
                 <a href="#!sign-in" id="signIn">Sign In</a>
-                <button class="btn primary pull-right" onclick="{ signUp }">Sign Up</button>
+                <button class="btn primary pull-right" onclick="{ signUp }" disabled={ isBlocked }>Sign Up</button>
             </div>
         </div>
     </div>
@@ -64,16 +64,22 @@
         var self = this, moduleId = 'sign-up', moduleName = 'Sign Up'
         self.moduleName = moduleName
 
-        self.on('close', function (self) {
-            console.log(moduleId + ' close started...')
-            self.close()
-            console.log(moduleId + ' close finished...')
-        });
-
         self.on('mount', function () {
             console.log(moduleId + ' mount started...')
             self.reset()
             console.log(moduleId + ' mount finished...')
+        });
+
+        self.on('ready', function() {
+            console.log(moduleId + ' ready started...')
+            self.userUserId.focus()
+            console.log(moduleId + ' ready finished...')
+        })
+
+        self.on('close', function (self) {
+            console.log(moduleId + ' close started...')
+            self.close()
+            console.log(moduleId + ' close finished...')
         });
 
         reset() {
@@ -218,8 +224,13 @@
                 self.update()
                 return
             }
-            if(s.length < 2 && s.length > 20) {
-                self.userFirstNameMessage = 'Should be minimum 2 and not more than 20 characters long'
+            if(!(/^[a-zA-Z ]*$/.test(s))) {
+                self.userFirstNameMessage = 'Should have alphabets only'
+                self.update()
+                return
+            }
+            if(s.length < 3 || s.length > 20) {
+                self.userFirstNameMessage = 'Should be minimum 3 and not more than 20 characters long'
                 self.update()
                 return
             }
